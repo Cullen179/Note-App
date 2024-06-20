@@ -18,7 +18,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
       contextIsolation: true,
     },
@@ -26,23 +26,39 @@ const createWindow = () => {
     autoHideMenuBar: true,
     minWidth: 300,
     minHeight: 400,
-    title: 'Electron Vite',
+    title: "Electron Vite",
+    opacity: 0.9,
   });
 
-  ipcMain.on('setOnTop', handleOnTop);
+  // IPC communication
+  ipcMain.on("setOnTop", handleOnTop);
+
+
+  let previousSize = 0;
+  mainWindow.on("resize", () => {
+    const width = mainWindow.getSize()[0];
+
+    if (width < 640) {
+      mainWindow.webContents.send("onResize", true);
+    } else if (width >= 640 && previousSize < 640) {
+      mainWindow.webContents.send("onResize", false);
+    }
+    previousSize = width;
+  });
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(
+      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
+    );
   }
 
   // Open the DevTools.
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === "development") {
+    // mainWindow.webContents.openDevTools();
   }
-
 };
 
 // This method will be called when Electron has finished
