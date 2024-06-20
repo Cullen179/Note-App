@@ -9,7 +9,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint-fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "test": "electron-forge make && playwright test"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
@@ -44,15 +46,20 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@clerk/clerk-react": "^5.2.4",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@vitejs/plugin-react": "^4.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "electron-playwright-helpers": "^1.7.1",
     "electron-squirrel-startup": "^1.0.1",
+    "firebase": "^10.12.2",
     "lucide-react": "^0.390.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-resizable-panels": "^2.0.19",
+    "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vite-plugin-react": "^4.0.1"
