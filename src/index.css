@@ -2,7 +2,12 @@
   @tailwind components;
   @tailwind utilities;
 
-  
+.lucide {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -55,6 +60,10 @@
       @apply border-border;
     }
     body {
-      @apply bg-background text-foreground;
+      @apply bg-background text-foreground min-h-screen h-screen max-h-screen font-sans antialiased;
+    }
+
+    #app {
+      @apply h-full;
     }
   }
