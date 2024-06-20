@@ -7,10 +7,15 @@ if (!process.contextIsolated) {
 }
 
 try {
-    contextBridge.exposeInMainWorld('electronAPI', {
-        setOnTop: (isOnTop: boolean) => {
-            ipcRenderer.send('setOnTop', isOnTop);
-        },
+    contextBridge.exposeInMainWorld("electronAPI", {
+      setOnTop: (isOnTop: boolean) => {
+        ipcRenderer.send("setOnTop", isOnTop);
+      },
+      onResize: (callback: (isSmall: boolean) => void) => {
+        ipcRenderer.on("onResize", (_, isSmall) => {
+          callback(isSmall);
+        });
+      }
     });
 } catch (error) {
     console.error('Failed to expose electronAPI:', error);
